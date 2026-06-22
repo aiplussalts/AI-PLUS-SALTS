@@ -1,0 +1,1545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI PLUS SALTS — Artisan Salts</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --parchment:  #F0EDE6;
+    --parchment2: #E8E3D9;
+    --parchment3: #DDD7CB;
+    --forest:     #2C3A2E;
+    --forest-mid: #3E5240;
+    --forest-lt:  #5A7060;
+    --mineral:    #8B7355;
+    --sand:       #C4B99A;
+    --sand-lt:    #DDD5C0;
+    --ink:        #1A1A18;
+    --ink-mid:    #4A4A44;
+    --ink-lt:     #7A7A72;
+    --border:     rgba(44,58,46,0.12);
+    --border-mid: rgba(44,58,46,0.22);
+    --font-disp: 'Playfair Display', Georgia, serif;
+    --font-ui:   'DM Sans', system-ui, sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--parchment);
+    color: var(--ink);
+    font-family: var(--font-ui);
+    font-size: 15px;
+    line-height: 1.65;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 52px;
+    height: 70px;
+    background: rgba(240,237,230,0.94);
+    backdrop-filter: blur(12px);
+    border-bottom: 0.5px solid var(--border);
+  }
+
+  .nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    text-decoration: none;
+  }
+
+  .nav-logo-crystal {
+    width: 34px;
+    height: 34px;
+    position: relative;
+  }
+
+  .nav-logo-crystal svg { width: 34px; height: 34px; }
+
+  .nav-logo-text {
+    font-family: var(--font-disp);
+    font-size: 19px;
+    font-weight: 400;
+    color: var(--forest);
+    letter-spacing: 1.5px;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 38px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--ink-mid);
+    text-decoration: none;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover, .nav-links a.active { color: var(--forest); }
+
+  .btn-nav {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--parchment);
+    background: var(--forest);
+    border: none;
+    padding: 10px 24px;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.15s;
+    border-radius: 2px;
+  }
+
+  .btn-nav:hover { background: var(--forest-mid); transform: translateY(-1px); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 120px 52px 80px;
+    position: relative;
+    overflow: hidden;
+    background: var(--parchment);
+  }
+
+  /* Crystal grain dots — the signature ambient element */
+  .grain-field {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  .grain-field svg {
+    width: 100%;
+    height: 100%;
+    opacity: 0.18;
+  }
+
+  .hero-eyebrow {
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--forest-lt);
+    margin-bottom: 24px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 0.2s;
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .hero-eyebrow::before,
+  .hero-eyebrow::after {
+    content: '';
+    display: block;
+    width: 40px;
+    height: 0.5px;
+    background: var(--forest-lt);
+    opacity: 0.5;
+  }
+
+  .hero-title {
+    font-family: var(--font-disp);
+    font-size: clamp(54px, 9vw, 108px);
+    font-weight: 400;
+    line-height: 0.95;
+    letter-spacing: -1.5px;
+    color: var(--forest);
+    margin-bottom: 30px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 0.4s;
+    position: relative;
+  }
+
+  .hero-title em {
+    font-style: italic;
+    color: var(--mineral);
+    display: block;
+  }
+
+  .hero-subtitle {
+    font-size: 16px;
+    font-weight: 300;
+    color: var(--ink-mid);
+    max-width: 460px;
+    line-height: 1.85;
+    margin-bottom: 44px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 0.6s;
+  }
+
+  .hero-cta-row {
+    display: flex;
+    gap: 14px;
+    justify-content: center;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 0.8s;
+  }
+
+  .btn-primary {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    background: var(--forest);
+    color: var(--parchment);
+    border: none;
+    padding: 15px 38px;
+    cursor: pointer;
+    border-radius: 2px;
+    transition: background 0.2s, transform 0.15s;
+  }
+
+  .btn-primary:hover { background: var(--forest-mid); transform: translateY(-2px); }
+
+  .btn-outline {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    background: transparent;
+    color: var(--forest);
+    border: 0.5px solid var(--border-mid);
+    padding: 15px 38px;
+    cursor: pointer;
+    border-radius: 2px;
+    transition: border-color 0.2s, background 0.2s, transform 0.15s;
+  }
+
+  .btn-outline:hover { border-color: var(--forest); background: rgba(44,58,46,0.05); transform: translateY(-2px); }
+
+  /* Origin stats */
+  .hero-origins {
+    display: flex;
+    gap: 0;
+    margin-top: 72px;
+    padding-top: 44px;
+    border-top: 0.5px solid var(--border);
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 1.0s;
+    width: 100%;
+    max-width: 680px;
+  }
+
+  .origin {
+    flex: 1;
+    text-align: center;
+    padding: 0 20px;
+    border-right: 0.5px solid var(--border);
+  }
+
+  .origin:last-child { border-right: none; }
+
+  .origin-flag {
+    font-size: 22px;
+    margin-bottom: 6px;
+    display: block;
+  }
+
+  .origin-name {
+    font-family: var(--font-disp);
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--forest);
+  }
+
+  .origin-label {
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--ink-lt);
+    margin-top: 2px;
+  }
+
+  .hero-scroll {
+    position: absolute;
+    bottom: 36px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    opacity: 0;
+    animation: fadeIn 1s ease forwards 1.6s;
+  }
+
+  .hero-scroll span {
+    font-size: 9px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--ink-lt);
+  }
+
+  .scroll-line {
+    width: 1px;
+    height: 44px;
+    background: linear-gradient(to bottom, var(--forest-lt), transparent);
+    animation: scrollPulse 2.2s ease infinite;
+  }
+
+  /* ── STRIP: WHAT MAKES SALT ── */
+  .strip {
+    background: var(--forest);
+    padding: 40px 52px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 60px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .strip::-webkit-scrollbar { display: none; }
+
+  .strip-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-shrink: 0;
+    color: var(--sand);
+  }
+
+  .strip-item span {
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--sand);
+    white-space: nowrap;
+  }
+
+  .strip-dot {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--forest-lt);
+    flex-shrink: 0;
+  }
+
+  /* ── SECTION ── */
+  .section {
+    padding: 96px 52px;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-bottom: 56px;
+  }
+
+  .section-label {
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--mineral);
+    margin-bottom: 12px;
+  }
+
+  .section-title {
+    font-family: var(--font-disp);
+    font-size: clamp(30px, 4vw, 50px);
+    font-weight: 400;
+    color: var(--forest);
+    line-height: 1.15;
+  }
+
+  .section-title em { font-style: italic; color: var(--mineral); }
+
+  .section-count {
+    font-size: 13px;
+    color: var(--ink-lt);
+    font-weight: 300;
+  }
+
+  /* ── FILTER BAR ── */
+  .filter-bar {
+    display: flex;
+    gap: 0;
+    margin-bottom: 52px;
+    border-bottom: 0.5px solid var(--border);
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .filter-bar::-webkit-scrollbar { display: none; }
+
+  .filter-btn {
+    flex-shrink: 0;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: var(--ink-lt);
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid transparent;
+    padding: 13px 26px;
+    cursor: pointer;
+    transition: color 0.2s, border-color 0.2s;
+    white-space: nowrap;
+    margin-bottom: -0.5px;
+  }
+
+  .filter-btn:hover { color: var(--forest); }
+
+  .filter-btn.active {
+    color: var(--forest);
+    border-bottom-color: var(--forest);
+  }
+
+  /* ── PRODUCT GRID ── */
+  .products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 2px;
+  }
+
+  .product-card {
+    background: var(--parchment2);
+    border: 0.5px solid var(--border);
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.3s ease, border-color 0.25s, box-shadow 0.3s;
+    display: none;
+  }
+
+  .product-card.visible { display: block; }
+
+  .product-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--border-mid);
+    box-shadow: 0 12px 40px rgba(44,58,46,0.10);
+    z-index: 2;
+  }
+
+  .product-card:hover .product-img { transform: scale(1.04); }
+  .product-card:hover .product-cta { opacity: 1; transform: translateY(0); }
+
+  /* Product image: styled placeholder with colour per variant */
+  .product-img-wrap {
+    position: relative;
+    aspect-ratio: 4/3;
+    overflow: hidden;
+  }
+
+  .product-img {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.5s ease;
+    position: relative;
+  }
+
+  .product-img svg {
+    width: 90px;
+    height: 90px;
+    opacity: 0.22;
+  }
+
+  .product-img-label {
+    position: absolute;
+    font-family: var(--font-disp);
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    bottom: 16px;
+    left: 0;
+    right: 0;
+    text-align: center;
+  }
+
+  .img-himalayan   { background: #F5D5C8; }
+  .img-himalayan .product-img-label   { color: #8B4A38; }
+  .img-himalayan svg path { fill: #C4846A; }
+
+  .img-sea         { background: #D5E8F0; }
+  .img-sea .product-img-label         { color: #2A5E7A; }
+  .img-sea svg path { fill: #4A8FAD; }
+
+  .img-black       { background: #2A2A28; }
+  .img-black .product-img-label       { color: #9A9A94; }
+  .img-black svg path { fill: #6A6A64; }
+
+  .img-smoked      { background: #3A3028; }
+  .img-smoked .product-img-label      { color: #C4A878; }
+  .img-smoked svg path { fill: #8A7054; }
+
+  .img-fleur       { background: #E8F0E8; }
+  .img-fleur .product-img-label       { color: #3E5E3E; }
+  .img-fleur svg path { fill: #6A9A6A; }
+
+  .img-celtic      { background: #D8DDD0; }
+  .img-celtic .product-img-label      { color: #3A4430; }
+  .img-celtic svg path { fill: #6A7A5A; }
+
+  .img-kala        { background: #1E1820; }
+  .img-kala .product-img-label        { color: #B090B0; }
+  .img-kala svg path { fill: #7A5A7A; }
+
+  .img-murray      { background: #F0E8D0; }
+  .img-murray .product-img-label      { color: #7A6040; }
+  .img-murray svg path { fill: #A89060; }
+
+  .img-truffle     { background: #30281E; }
+  .img-truffle .product-img-label     { color: #C0A860; }
+  .img-truffle svg path { fill: #806840; }
+
+  .img-kosher      { background: #F4F2EC; }
+  .img-kosher .product-img-label      { color: #5A5850; }
+  .img-kosher svg path { fill: #9A9888; }
+
+  .img-pickling    { background: #F0F4F0; }
+  .img-pickling .product-img-label    { color: #3A5A3A; }
+  .img-pickling svg path { fill: #6A906A; }
+
+  .img-citrus      { background: #F8F0D0; }
+  .img-citrus .product-img-label      { color: #7A6020; }
+  .img-citrus svg path { fill: #C0A030; }
+
+  .product-badge {
+    position: absolute;
+    top: 14px;
+    left: 14px;
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 2px;
+    z-index: 2;
+  }
+
+  .badge-new      { background: var(--forest); color: var(--parchment); }
+  .badge-raw      { background: var(--mineral); color: #fff; }
+  .badge-popular  { background: var(--parchment); color: var(--forest); border: 0.5px solid var(--border-mid); }
+  .badge-gourmet  { background: var(--ink); color: var(--sand-lt); }
+  .badge-organic  { background: #3E6840; color: #C4DEC4; }
+
+  .product-cta {
+    position: absolute;
+    bottom: 14px;
+    right: 14px;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--forest);
+    border: 0.5px solid var(--border-mid);
+    padding: 7px 16px;
+    background: rgba(240,237,230,0.88);
+    border-radius: 2px;
+    opacity: 0;
+    transform: translateY(6px);
+    transition: opacity 0.3s, transform 0.3s;
+    z-index: 2;
+  }
+
+  /* Product info */
+  .product-info {
+    padding: 22px 26px 26px;
+    background: var(--parchment2);
+  }
+
+  .product-origin {
+    font-size: 10px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--mineral);
+    margin-bottom: 6px;
+  }
+
+  .product-name {
+    font-family: var(--font-disp);
+    font-size: 24px;
+    font-weight: 400;
+    color: var(--forest);
+    line-height: 1.15;
+    margin-bottom: 6px;
+  }
+
+  .product-tagline {
+    font-size: 13px;
+    color: var(--ink-lt);
+    font-weight: 300;
+    margin-bottom: 18px;
+    line-height: 1.55;
+  }
+
+  .product-attrs {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 18px;
+  }
+
+  .attr-tag {
+    font-size: 10px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--forest-lt);
+    background: rgba(44,58,46,0.07);
+    padding: 4px 10px;
+    border-radius: 2px;
+  }
+
+  .product-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 16px;
+    border-top: 0.5px solid var(--border);
+  }
+
+  .product-price {
+    font-family: var(--font-disp);
+    font-size: 15px;
+    color: var(--ink-mid);
+  }
+
+  .product-price strong {
+    color: var(--forest);
+    font-weight: 500;
+    font-size: 17px;
+  }
+
+  .product-size {
+    font-size: 11px;
+    color: var(--ink-lt);
+    margin-top: 2px;
+    font-weight: 300;
+  }
+
+  .btn-card {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--forest);
+    background: transparent;
+    border: 0.5px solid var(--border-mid);
+    padding: 8px 18px;
+    cursor: pointer;
+    border-radius: 2px;
+    transition: background 0.2s, border-color 0.2s;
+  }
+
+  .btn-card:hover { background: rgba(44,58,46,0.07); border-color: var(--forest); }
+
+  /* ── CRAFT BAND ── */
+  .craft-band {
+    background: var(--forest);
+    padding: 80px 52px;
+  }
+
+  .craft-inner {
+    max-width: 1300px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+
+  .craft-text .section-label { color: var(--sand); }
+
+  .craft-text .section-title {
+    color: var(--parchment);
+  }
+
+  .craft-text .section-title em { color: var(--sand); }
+
+  .craft-body {
+    font-size: 15px;
+    font-weight: 300;
+    color: var(--sand);
+    line-height: 1.85;
+    margin: 22px 0 36px;
+  }
+
+  .btn-light {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--forest);
+    background: var(--parchment);
+    border: none;
+    padding: 14px 34px;
+    cursor: pointer;
+    border-radius: 2px;
+    transition: background 0.2s, transform 0.15s;
+  }
+
+  .btn-light:hover { background: var(--parchment3); transform: translateY(-2px); }
+
+  .craft-facts {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+  }
+
+  .craft-fact {
+    background: rgba(240,237,230,0.06);
+    padding: 28px 24px;
+    border: 0.5px solid rgba(240,237,230,0.10);
+  }
+
+  .craft-fact-number {
+    font-family: var(--font-disp);
+    font-size: 38px;
+    font-weight: 400;
+    color: var(--parchment);
+    line-height: 1;
+  }
+
+  .craft-fact-sup {
+    font-size: 16px;
+    color: var(--sand);
+    vertical-align: super;
+  }
+
+  .craft-fact-label {
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--sand);
+    margin-top: 8px;
+    font-weight: 300;
+  }
+
+  /* ── CTA BAND ── */
+  .cta-band {
+    padding: 88px 52px;
+    text-align: center;
+    background: var(--parchment2);
+    border-top: 0.5px solid var(--border);
+    border-bottom: 0.5px solid var(--border);
+  }
+
+  .cta-inner {
+    max-width: 620px;
+    margin: 0 auto;
+  }
+
+  .cta-inner .section-label { text-align: center; }
+
+  .cta-title {
+    font-family: var(--font-disp);
+    font-size: clamp(28px, 4vw, 46px);
+    font-weight: 400;
+    color: var(--forest);
+    line-height: 1.2;
+    margin-bottom: 18px;
+  }
+
+  .cta-title em { font-style: italic; color: var(--mineral); }
+
+  .cta-body {
+    font-size: 15px;
+    font-weight: 300;
+    color: var(--ink-mid);
+    line-height: 1.8;
+    margin-bottom: 36px;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--forest);
+    padding: 64px 52px 36px;
+  }
+
+  .footer-top {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 48px;
+    margin-bottom: 52px;
+  }
+
+  .footer-brand .nav-logo-text { color: var(--parchment); }
+
+  .footer-brand p {
+    font-size: 14px;
+    font-weight: 300;
+    color: var(--sand);
+    line-height: 1.8;
+    margin-top: 14px;
+    max-width: 260px;
+  }
+
+  .footer-col h4 {
+    font-size: 10px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--sand);
+    margin-bottom: 18px;
+  }
+
+  .footer-col ul { list-style: none; }
+
+  .footer-col ul li { margin-bottom: 10px; }
+
+  .footer-col ul li a {
+    font-size: 14px;
+    font-weight: 300;
+    color: rgba(196,185,154,0.7);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .footer-col ul li a:hover { color: var(--parchment); }
+
+  .footer-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 24px;
+    border-top: 0.5px solid rgba(240,237,230,0.12);
+  }
+
+  .footer-bottom p {
+    font-size: 12px;
+    color: rgba(196,185,154,0.5);
+    font-weight: 300;
+  }
+
+  .footer-bottom-links {
+    display: flex;
+    gap: 22px;
+    list-style: none;
+  }
+
+  .footer-bottom-links a {
+    font-size: 12px;
+    color: rgba(196,185,154,0.5);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .footer-bottom-links a:hover { color: var(--parchment); }
+
+  /* EMPTY STATE */
+  .empty-state {
+    grid-column: 1/-1;
+    text-align: center;
+    padding: 80px 20px;
+    display: none;
+  }
+
+  .empty-state p {
+    font-family: var(--font-disp);
+    font-size: 22px;
+    color: var(--ink-lt);
+    font-weight: 300;
+    font-style: italic;
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(22px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+
+  @keyframes scrollPulse {
+    0%,100% { transform: scaleY(1); opacity: 1; }
+    50%      { transform: scaleY(0.55); opacity: 0.35; }
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    nav { padding: 0 24px; }
+    .nav-links { display: none; }
+    .hero { padding: 100px 24px 64px; }
+    .section { padding: 64px 24px; }
+    .section-header { flex-direction: column; align-items: flex-start; gap: 12px; }
+    .products-grid { grid-template-columns: 1fr; }
+    .craft-inner { grid-template-columns: 1fr; gap: 40px; }
+    .footer-top { grid-template-columns: 1fr 1fr; }
+    .footer-bottom { flex-direction: column; gap: 14px; text-align: center; }
+    .strip { gap: 30px; padding: 32px 24px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">
+    <div class="nav-logo-crystal">
+      <svg viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <polygon points="17,3 31,12 31,24 17,32 3,24 3,12" fill="none" stroke="#2C3A2E" stroke-width="1.2"/>
+        <polygon points="17,9 25,14 25,22 17,27 9,22 9,14" fill="#2C3A2E" opacity="0.15"/>
+        <circle cx="17" cy="17" r="3" fill="#2C3A2E" opacity="0.5"/>
+      </svg>
+    </div>
+    <span class="nav-logo-text">AI PLUS SALTS</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#" class="active">Our Salts</a></li>
+    <li><a href="#">Origins</a></li>
+    <li><a href="#">Recipes</a></li>
+    <li><a href="#">Gift Sets</a></li>
+    <li><a href="#">Wholesale</a></li>
+    <li><a href="#">Our Story</a></li>
+  </ul>
+  <button class="btn-nav">Shop Now</button>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <!-- Grain crystal field -->
+  <div class="grain-field">
+    <svg viewBox="0 0 1200 700" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+      <!-- Scattered crystal shapes -->
+      <polygon points="100,80 112,90 108,104 92,104 88,90" fill="#2C3A2E"/>
+      <polygon points="320,180 328,188 325,198 315,198 312,188" fill="#8B7355"/>
+      <polygon points="900,120 914,130 910,146 894,146 890,130" fill="#2C3A2E"/>
+      <polygon points="650,60 658,68 655,78 645,78 642,68" fill="#8B7355"/>
+      <polygon points="180,320 192,332 188,348 172,348 168,332" fill="#2C3A2E"/>
+      <polygon points="1050,280 1060,288 1057,300 1047,300 1044,288" fill="#8B7355"/>
+      <polygon points="740,400 750,408 747,420 737,420 734,408" fill="#2C3A2E"/>
+      <polygon points="420,520 430,530 427,542 417,542 414,530" fill="#8B7355"/>
+      <polygon points="60,560 70,568 67,580 57,580 54,568" fill="#2C3A2E"/>
+      <polygon points="1100,500 1112,510 1108,524 1092,524 1088,510" fill="#2C3A2E"/>
+      <polygon points="820,600 830,610 827,622 817,622 814,610" fill="#8B7355"/>
+      <polygon points="260,640 270,650 267,662 257,662 254,650" fill="#2C3A2E"/>
+      <circle cx="500" cy="150" r="4" fill="#8B7355"/>
+      <circle cx="780" cy="250" r="3" fill="#2C3A2E"/>
+      <circle cx="140" cy="460" r="5" fill="#8B7355"/>
+      <circle cx="960" cy="400" r="3" fill="#2C3A2E"/>
+      <circle cx="350" cy="380" r="4" fill="#8B7355"/>
+      <circle cx="670" cy="550" r="3" fill="#2C3A2E"/>
+      <rect x="490" y="580" width="8" height="8" transform="rotate(30 494 584)" fill="#8B7355"/>
+      <rect x="1020" y="150" width="6" height="6" transform="rotate(20 1023 153)" fill="#2C3A2E"/>
+      <rect x="200" y="200" width="7" height="7" transform="rotate(45 203 203)" fill="#8B7355"/>
+      <rect x="880" y="620" width="6" height="6" transform="rotate(15 883 623)" fill="#2C3A2E"/>
+    </svg>
+  </div>
+
+  <p class="hero-eyebrow">Harvested from the Earth's Oldest Waters</p>
+  <h1 class="hero-title">
+    Pure Salt,<br>
+    <em>Extraordinary Taste</em>
+  </h1>
+  <p class="hero-subtitle">From ancient Himalayan seabeds to Atlantic tidal flats, we source the world's finest salts — unrefined, mineral-rich, and full of character.</p>
+  <div class="hero-cta-row">
+    <button class="btn-primary" onclick="document.getElementById('lineup').scrollIntoView({behavior:'smooth'})">Explore Our Salts</button>
+    <button class="btn-outline">Our Origins</button>
+  </div>
+  <div class="hero-origins">
+    <div class="origin">
+      <span class="origin-flag">🏔️</span>
+      <div class="origin-name">Himalayan</div>
+      <div class="origin-label">Pakistan · 600m depth</div>
+    </div>
+    <div class="origin">
+      <span class="origin-flag">🌊</span>
+      <div class="origin-name">Atlantic</div>
+      <div class="origin-label">Brittany, France</div>
+    </div>
+    <div class="origin">
+      <span class="origin-flag">🌋</span>
+      <div class="origin-name">Volcanic</div>
+      <div class="origin-label">Hawaii, USA</div>
+    </div>
+    <div class="origin">
+      <span class="origin-flag">🌿</span>
+      <div class="origin-name">Smoked</div>
+      <div class="origin-label">Scandinavia</div>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <span>Explore</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- STRIP -->
+<div class="strip">
+  <div class="strip-item">
+    <svg width="16" height="16" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6" fill="none" stroke="#C4B99A" stroke-width="1.2"/><path d="M8 4v4l3 2" stroke="#C4B99A" stroke-width="1.2" stroke-linecap="round"/></svg>
+    <span>Hand-harvested</span>
+  </div>
+  <div class="strip-dot"></div>
+  <div class="strip-item">
+    <svg width="16" height="16" viewBox="0 0 16 16"><path d="M8 2 L14 6 L14 11 L8 14 L2 11 L2 6 Z" fill="none" stroke="#C4B99A" stroke-width="1.2"/></svg>
+    <span>No additives</span>
+  </div>
+  <div class="strip-dot"></div>
+  <div class="strip-item">
+    <svg width="16" height="16" viewBox="0 0 16 16"><path d="M8 2c0 0-5 4-5 8a5 5 0 0010 0c0-4-5-8-5-8z" fill="none" stroke="#C4B99A" stroke-width="1.2"/></svg>
+    <span>Mineral-rich</span>
+  </div>
+  <div class="strip-dot"></div>
+  <div class="strip-item">
+    <svg width="16" height="16" viewBox="0 0 16 16"><rect x="2" y="2" width="12" height="12" rx="2" fill="none" stroke="#C4B99A" stroke-width="1.2"/><path d="M5 8h6M8 5v6" stroke="#C4B99A" stroke-width="1.2" stroke-linecap="round"/></svg>
+    <span>Sustainably sourced</span>
+  </div>
+  <div class="strip-dot"></div>
+  <div class="strip-item">
+    <svg width="16" height="16" viewBox="0 0 16 16"><path d="M2 14 L8 2 L14 14 Z" fill="none" stroke="#C4B99A" stroke-width="1.2"/></svg>
+    <span>Chef-approved</span>
+  </div>
+  <div class="strip-dot"></div>
+  <div class="strip-item">
+    <svg width="16" height="16" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6" fill="none" stroke="#C4B99A" stroke-width="1.2"/><path d="M5 8l2 2 4-4" stroke="#C4B99A" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <span>Lab-tested purity</span>
+  </div>
+</div>
+
+<!-- PRODUCT LINEUP -->
+<div id="lineup" class="section">
+  <div class="section-header">
+    <div>
+      <p class="section-label">The Collection</p>
+      <h2 class="section-title">All Artisan <em>Salts</em></h2>
+    </div>
+    <p class="section-count" id="product-count">Showing 12 varieties</p>
+  </div>
+
+  <!-- FILTERS -->
+  <div class="filter-bar">
+    <button class="filter-btn active" data-filter="all">All Varieties</button>
+    <button class="filter-btn" data-filter="himalayan">Himalayan</button>
+    <button class="filter-btn" data-filter="sea">Sea Salt</button>
+    <button class="filter-btn" data-filter="smoked">Smoked</button>
+    <button class="filter-btn" data-filter="gourmet">Gourmet</button>
+    <button class="filter-btn" data-filter="cooking">Cooking</button>
+  </div>
+
+  <!-- GRID -->
+  <div class="products-grid" id="products-grid">
+
+    <!-- HIMALAYAN -->
+    <div class="product-card visible" data-type="himalayan">
+      <div class="product-img-wrap">
+        <div class="product-img img-himalayan">
+          <svg viewBox="0 0 90 90" xmlns="http://www.w3.org/2000/svg"><polygon points="45,10 80,30 80,62 45,80 10,62 10,30" fill="none" stroke="currentColor" stroke-width="2"/><polygon points="45,25 65,36 65,58 45,68 25,58 25,36" stroke="currentColor" fill="none" stroke-width="1.5"/><circle cx="45" cy="45" r="8" stroke="currentColor" fill="none" stroke-width="1.5"/><path d="M45,25v20M45,48v17M25,36l20,9M57,41l23,21M65,36l-20,9M33,41l-23,21" stroke="currentColor" stroke-width="0.8"/></svg>
+          <div class="product-img-label">Pink Crystal</div>
+        </div>
+        <span class="product-badge badge-popular">Best Seller</span>
+        <div class="product-cta">Add to Basket →</div>
+      </div>
+      <div class="product-info">
+        <p class="product-origin">Khewra Mine · Pakistan</p>
+        <h3 class="product-name">Himalayan Pink Salt</h3>
+        <p class="product-tagline">Formed over 250 million years beneath ancient mountains. Delicate, rosy crystals with 84 trace minerals.</p>
+        <div class="product-attrs">
+          <span class="attr-tag">Coarse grind</span>
+          <span class="attr-tag">84 minerals</span>
+          <span class="attr-tag">Unrefined</span>
+        </div>
+        <div class="product-footer">
+          <div>
+            <div class="product-price">From <strong>₹320</strong></div>
+            <div class="product-size">250g · 500g · 1kg</div>
+          </div>
+          <button class="btn-card">Buy Now</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card visible" data-type="himalayan">
+      <div class="product-img-wrap">
+        <div class="product-img img-himalayan" style="background:#F0C8B8;">
+          <svg viewBox="0 0 90 90" xmlns="http://www.w3.org/2000/svg"><circle cx="45" cy="45" r="32" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="45" cy="45" r="20" fill="none" stroke="currentColor" stroke-width="1.2"/><circle cx="45" cy="45" r="9" fill="currentColor" opacity="0.3"/><path d="M13,45h64M45,13v64" stroke="currentColor" stroke-width="0.8"/><path d="M20,20l50,50M70,20l-50,50" stroke="currentColor" stroke-width="0.5" stroke-dasharray="3,4"/></svg>
+          <div class="product-img-label" style="color:#7A3820;">Fine Grain</div>
+        </div>
+        <span class="product-badge badge-new">New</span>
+        <div class="product-cta">Add to Basket →</div>
+      </div>
+      <div class="product-info">
+        <p class="product-origin">Khewra Mine · Pakistan</p>
+        <h3 class="product-name">Himalayan Fine Salt</h3>
+        <p class="product-tagline">Milled to a silky powder — perfect for baking, finishing, and everyday seasoning at the table.</p>
+        <div class="product-attrs">
+          <span class="attr-tag">Fine grind</span>
+          <span class="attr-tag">Table-ready</span>
+          <span class="attr-tag">Mild flavour</span>
+        </div>
+        <div class="product-footer">
+          <div>
+            <div class="product-price">From <strong>₹280</strong></div>
+            <div class="product-size">250g · 500g · 1kg</div>
+          </div>
+          <button class="btn-card">Buy Now</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- SEA SALT -->
+    <div class="product-card visible" data-type="sea">
+      <div class="product-img-wrap">
+        <div class="product-img img-sea">
+          <svg viewBox="0 0 90 90" xmlns="http://www.w3.org/2000/svg"><path d="M10,55 Q20,40 30,55 Q40,70 50,55 Q60,40 70,55 Q80,70 90,55" fill="none" stroke="currentColor" stroke-width="2"/><path d="M10,45 Q20,30 30,45 Q40,60 50,45 Q60,30 70,45 Q80,60 90,45" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M10,35 Q20,20 30,35 Q40,50 50,35 Q60,20 70,35 Q80,50 90,35" fill="none" stroke="currentColor" stroke-width="1"/><circle cx="45" cy="30" r="6" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+          <div class="product-img-label">Atlantic Flakes</div>
+        </div>
+        <span class="product-badge badge-popular">Popular</span>
+        <div class="product-cta">Add to Basket →</div>
+      </div>
+      <div class="product-info">
+        <p class="product-origin">Guérande · Brittany, France</p>
+        <h3 class="product-name">Atlantic Sea Salt Flakes</h3>
+        <p class="product-tagline">Hand-raked from ancient salt marshes at low tide. Delicate, pyramid-shaped crystals with a clean ocean finish.</p>
+        <div class="product-attrs">
+          <span class="attr-tag">Flaked</span>
+          <span class="attr-tag">Hand-raked</span>
+          <span class="attr-tag">Finishing salt</span>
+        </div>
+        <div class="product-footer">
+          <div>
+            <div class="product-price">From <strong>₹480</strong></div>
+            <div class="product-size">100g · 250g · 500g</div>
+          </div>
+          <button class="btn-card">Buy Now</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card visible" data-type="sea gourmet">
+      <div class="product-img-wrap">
+        <div class="product-img img-fleur">
+          <svg viewBox="0 0 90 90" xmlns="http://www.w3.org/2000/svg"><circle cx="45" cy="45" r="28" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M45,17 Q55,30 45,45 Q35,30 45,17Z" fill="currentColor" opacity="0.25"/><path d="M45,73 Q35,60 45,45 Q55,60 45,73Z" fill="currentColor" opacity="0.2"/><path d="M17,45 Q30,55 45,45 Q30,35 17,45Z" fill="currentColor" opacity="0.2"/><path d="M73,45 Q60,35 45,45 Q60,55 73,45Z" fill="currentColor" opacity="0.25"/><circle cx="45" cy="45" r="8" fill="currentColor" opacity="0.3"/></svg>
+          <div class="product-img-label">Fleur de Sel</div>
+        </div>
+        <span class="product-badge badge-gourmet">Gourmet</span>
+        <div class="product-cta">Add to Basket →</div>
+      </div>
+      <div class="product-info">
+        <p class="product-origin">Camargue · Provence, France</p>
+        <h3 class="product-name">Fleur de Sel</h3>
+        <p class="product-tagline">The "flower of salt." Skimmed from the surface at dawn by hand. Prized by Michelin-starred chefs worldwide.</p>
+        <div class="product-attrs">
+          <span class="attr-tag">Delicate</span>
+          <span class="attr-tag">Moist crystal</span>
+          <span class="attr-tag">Chef's choice</span>
+        </div>
+        <div class="product-footer">
+          <div>
+            <div class="product-price">From <strong>₹760</strong></div>
+            <div class="product-size">100g · 250g</div>
+          </div>
+          <button class="btn-card">Buy Now</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card visible" data-type="sea">
+      <div class="product-img-wrap">
+        <div class="product-img img-celtic">
+          <svg viewBox="0 0 90 90" xmlns="http://www.w3.org/2000/svg"><polygon points="45,12 56,35 80,38 63,56 67,80 45,68 23,80 27,56 10,38 34,35" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="45" cy="48" r="14" fill="none" stroke="currentColor" stroke-width="1.2"/><circle cx="45" cy="48" r="6" fill="currentColor" opacity="0.3"/></svg>
+          <div class="product-img-label">Grey Celtic</div>
+        </div>
+        <div class="product-cta">Add to Basket →</div>
+      </div>
+      <div class="product-info">
+        <p class="product-origin">Guérande · Loire-Atlantique</p>
+        <h3 class="product-name">Celtic Grey Salt</h3>
+        <p class="product-tagline">Naturally grey from the clay-lined salt pans. Robust mineral flavour, high moisture content, rich in magnesium.</p>
+        <div class="product-attrs">
+          <span class="attr-tag">Coarse</span>
+          <span class="attr-tag">High magnesium</span>
+          <span class="attr-tag">Moist</span>
+        </div>
+        <div class="product-footer">
+          <div>
+            <div class="product-price">From <strong>₹390</strong></div>
+            <div class="product-size">250g · 500g · 1kg</div>
+          </div>
+          <button class="btn-card">Buy Now</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- SMOKED -->
+    <div class="product-card visible" data-type="smoked gourmet">
+      <div class="product-img-wrap">
+        <div class="product-img img-smoked">
+          <svg viewBox="0 0 90 90" xmlns="http://www.w3.org/2000/svg"><path d="M30,70 Q25,55 35,45 Q28,35 38,25 Q34,15 45,10 Q56,15 52,25 Q62,35 55,45 Q65,55 60,70" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M35,70 Q30,57 40,47 Q33,37 42,28" fill="none" stroke="currentColor" stroke-width="1.2" stroke-dasharray="3,3"/><path d="M55,70 Q50,57 58,47 Q51,37 60,28" fill="none" stroke="currentColor" stroke-width="1.2" stroke-dasharray="3,3"/><line x1="20" y1="72" x2="70" y2="72" stroke="currentColor" stroke-width="2"/></svg>
+          <div class="product-img-label">Alderwood Smoked</div>
+        </div>
+        <span class="product-badge badge-new">New</span>
+        <div class="product-cta">Add to Basket →</div>
+      </div>
+      <div class="product-info">
+        <p class="product-origin">Pacific Northwest · USA</p>
+        <h3 class="product-name">Alderwood Smoked Salt</h3>
+        <p class="product-tagline">Cold-smoked over Pacific Alderwood for 48 hours. Deep, sweet smoke with a clean, lingering finish. Extraordinary on meat and eggs.</p>
+        <div class="product-attrs">
+          <span class="attr-tag">Cold-smoked</span>
+          <span class="attr-tag">48-hour cure</span>
+          <span class="attr-tag">BBQ grade</span>
+        </div>
+        <div class="product-footer">
+          <div>
+            <div class="product-price">From <strong>₹550</strong></div>
+            <div class="product-size">100g · 250g</div>
+          </div>
+          <button class="btn-card">Buy Now</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card visible" data-type="smoked">
+      <div class="product-img-wrap">
+        <div class="product-img img-smoked" style="background:#2C2218;">
+          <svg viewBox="0 0 90 90" xmlns="http://www.w3.org/2000/svg"><rect x="20" y="65" width="50" height="8" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M30,65 Q28,50 35,38 Q29,28 38,18 Q42,28 36,38 Q43,48 40,65" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M45,65 Q43,52 50,40 Q44,30 53,20 Q57,30 51,40 Q58,50 55,65" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+          <div class="product-img-label" style="color:#B08860;">Hickory Smoked</div>
+        </div>
+        <div class="product-cta">Add to Basket →</div>
+      </div>
+      <div class="product-info">
+        <p class="product-origin">Tennessee · USA</p>
+        <h3 class="product-name">Hickory Smoked Salt</h3>
+        <p class="product-tagline">Slow-smoked over Tennessee hickory. Bold, woody, and unmistakably Southern. The backbone of great barbecue.</p>
+        <div class="product-attrs">
+          <span class="attr-tag">Bold smoke</span>
+          <span class="attr-tag">BBQ essential</span>
+          <span class="attr-tag">Coarse grind</span>
+        </div>
+        <div class="product-footer">
+          <div>
+            <div class="product-price">From <strong>₹490</strong></div>
+            <div class="product-size">100g · 250g · 500g</div>
+          </div>
+          <button class="btn-card">Buy Now</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- GOURMET -->
+    <div class="product-card visible" data-type="gourmet">
+      <div class="product-img-wrap">
+        <div class="product-img img-black">
+          <svg viewBox="0 0 90 90" xmlns="http://www.w3.org/2000/svg"><polygon points="45,10 80,30 80,62 45,80 10,62 10,30" fill="none" stroke="currentColor" stroke-width="1.5"/><polygon points="45,22 68,36 68,57 45,70 22,57 22,36" fill="none" stroke="currentColor" stroke-width="1"/><polygon points="45,34 56,41 56,52 45,58 34,52 34,41" fill="currentColor" opacity="0.4"/></svg>
+          <div class="product-img-label">Black Lava</div>
+        </div>
+        <span class="product-badge badge-gourmet">Gourmet</span>
+        <div class="product-cta">Add to Basket →</div>
+      </div>
+      <div class="product-info">
+        <p class="product-origin">Big Island · Hawaii, USA</p>
+        <h3 class="product-name">Black Lava Salt</h3>
+        <p class="product-tagline">Pacific sea salt blended with activated coconut charcoal. Dramatic, striking — a finishing salt that commands attention on any dish.</p>
+        <div class="product-attrs">
+          <span class="attr-tag">Charcoal-blended</span>
+          <span class="attr-tag">Detoxifying</span>
+          <span class="attr-tag">Visual showpiece</span>
+        </div>
+        <div class="product-footer">
+          <div>
+            <div class="product-price">From <strong>₹680</strong></div>
+            <div class="product-size">100g · 250g</div>
+          </div>
+          <button class="btn-card">Buy Now</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card visible" data-type="gourmet">
+      <div class="product-img-wrap">
+        <div class="product-img img-kala">
+          <svg viewBox="0 0 90 90" xmlns="http://www.w3.org/2000/svg"><circle cx="45" cy="45" r="28" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M45,17v56M17,45h56M24,24l42,42M66,24L24,66" stroke="currentColor" stroke-width="0.8" stroke-dasharray="2,4"/><circle cx="45" cy="45" r="10" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="45" cy="45" r="4" fill="currentColor" opacity="0.5"/></svg>
+          <div class="product-img-label">Kala Namak</div>
+        </div>
+        <div class="product-cta">Add to Basket →</div>
+      </div>
+      <div class="product-info">
+        <p class="product-origin">Rajasthan · India</p>
+        <h3 class="product-name">Kala Namak Black Salt</h3>
+        <p class="product-tagline">The ancient Indian volcanic salt prized in Ayurveda. Sulfurous, pungent, and utterly distinctive — transformative in chutneys and chaats.</p>
+        <div class="product-attrs">
+          <span class="attr-tag">Ayurvedic</span>
+          <span class="attr-tag">Volcanic origin</span>
+          <span class="attr-tag">Digestive aid</span>
+        </div>
+        <div class="product-footer">
+          <div>
+            <div class="product-price">From <strong>₹240</strong></div>
+            <div class="product-size">200g · 500g · 1kg</div>
+          </div>
+          <button class="btn-card">Buy Now</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card visible" data-type="gourmet">
+      <div class="product-img-wrap">
+        <div class="product-img img-truffle">
+          <svg viewBox="0 0 90 90" xmlns="http://www.w3.org/2000/svg"><ellipse cx="45" cy="50" rx="25" ry="22" fill="none" stroke="currentColor" stroke-width="1.5"/><ellipse cx="38" cy="40" rx="12" ry="10" fill="none" stroke="currentColor" stroke-width="1"/><ellipse cx="55" cy="43" rx="8" ry="7" fill="none" stroke="currentColor" stroke-width="1"/><circle cx="40" cy="38" r="3" fill="currentColor" opacity="0.4"/><circle cx="55" cy="42" r="2" fill="currentColor" opacity="0.4"/><circle cx="48" cy="55" r="4" fill="currentColor" opacity="0.3"/></svg>
+          <div class="product-img-label">Black Truffle</div>
+        </div>
+        <span class="product-badge badge-gourmet">Gourmet</span>
+        <div class="product-cta">Add to Basket →</div>
+      </div>
+      <div class="product-info">
+        <p class="product-origin">Périgord · Dordogne, France</p>
+        <h3 class="product-name">Black Truffle Salt</h3>
+        <p class="product-tagline">Fleur de Sel married with hand-shaved Périgord black truffle. Earthy, intoxicating luxury — one pinch transforms a dish entirely.</p>
+        <div class="product-attrs">
+          <span class="attr-tag">Real truffle</span>
+          <span class="attr-tag">Finishing only</span>
+          <span class="attr-tag">Luxury gift</span>
+        </div>
+        <div class="product-footer">
+          <div>
+            <div class="product-price">From <strong>₹1,480</strong></div>
+            <div class="product-size">50g · 100g</div>
+          </div>
+          <button class="btn-card">Buy Now</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- COOKING -->
+    <div class="product-card visible" data-type="cooking">
+      <div class="product-img-wrap">
+        <div class="product-img img-kosher">
+          <svg viewBox="0 0 90 90" xmlns="http://www.w3.org/2000/svg"><rect x="15" y="30" width="60" height="35" rx="3" fill="none" stroke="currentColor" stroke-width="1.5"/><line x1="15" y1="45" x2="75" y2="45" stroke="currentColor" stroke-width="0.8"/><circle cx="30" cy="38" r="3" fill="currentColor" opacity="0.3"/><circle cx="45" cy="38" r="3" fill="currentColor" opacity="0.3"/><circle cx="60" cy="38" r="3" fill="currentColor" opacity="0.3"/><circle cx="30" cy="54" r="3" fill="currentColor" opacity="0.2"/><circle cx="45" cy="54" r="3" fill="currentColor" opacity="0.2"/><circle cx="60" cy="54" r="3" fill="currentColor" opacity="0.2"/><path d="M45,16 L45,28" stroke="currentColor" stroke-width="1.5"/><circle cx="45" cy="14" r="4" fill="none" stroke="currentColor" stroke-width="1.2"/></svg>
+          <div class="product-img-label">Kosher Coarse</div>
+        </div>
+        <span class="product-badge badge-popular">Everyday</span>
+        <div class="product-cta">Add to Basket →</div>
+      </div>
+      <div class="product-info">
+        <p class="product-origin">Solar Evaporation · USA</p>
+        <h3 class="product-name">Kosher Coarse Salt</h3>
+        <p class="product-tagline">The cook's workhorse. Large, uniform flakes that cling to food perfectly — ideal for brining, pasta water, crusting meat, and baking.</p>
+        <div class="product-attrs">
+          <span class="attr-tag">Cooking grade</span>
+          <span class="attr-tag">No iodine</span>
+          <span class="attr-tag">Value pack</span>
+        </div>
+        <div class="product-footer">
+          <div>
+            <div class="product-price">From <strong>₹190</strong></div>
+            <div class="product-size">500g · 1kg · 3kg</div>
+          </div>
+          <button class="btn-card">Buy Now</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card visible" data-type="cooking">
+      <div class="product-img-wrap">
+        <div class="product-img img-citrus">
+          <svg viewBox="0 0 90 90" xmlns="http://www.w3.org/2000/svg"><circle cx="45" cy="45" r="26" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M45,19v52M19,45h52" stroke="currentColor" stroke-width="1"/><path d="M45,19 Q65,32 65,45 Q65,58 45,71 Q25,58 25,45 Q25,32 45,19Z" fill="currentColor" opacity="0.12"/><circle cx="45" cy="45" r="6" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M30,30 Q40,22 45,19" stroke="currentColor" stroke-width="0.8" stroke-dasharray="2,3"/><path d="M60,30 Q50,22 45,19" stroke="currentColor" stroke-width="0.8" stroke-dasharray="2,3"/></svg>
+          <div class="product-img-label">Lemon & Herb</div>
+        </div>
+        <span class="product-badge badge-organic">Organic</span>
+        <div class="product-cta">Add to Basket →</div>
+      </div>
+      <div class="product-info">
+        <p class="product-origin">Mediterranean · Sicily, Italy</p>
+        <h3 class="product-name">Lemon & Herb Salt</h3>
+        <p class="product-tagline">Sicilian sea salt infused with organic lemon zest, thyme, and rosemary. A single pinch finishes fish, chicken, and roasted vegetables with Mediterranean sunshine.</p>
+        <div class="product-attrs">
+          <span class="attr-tag">Organic herbs</span>
+          <span class="attr-tag">Infused</span>
+          <span class="attr-tag">Gift-ready</span>
+        </div>
+        <div class="product-footer">
+          <div>
+            <div class="product-price">From <strong>₹420</strong></div>
+            <div class="product-size">100g · 250g</div>
+          </div>
+          <button class="btn-card">Buy Now</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="empty-state" id="empty-state">
+      <p>No varieties match that filter.</p>
+    </div>
+  </div>
+</div>
+
+<!-- CRAFT BAND -->
+<div class="craft-band">
+  <div class="craft-inner">
+    <div class="craft-text">
+      <p class="section-label">Our Philosophy</p>
+      <h2 class="section-title" style="color:var(--parchment);">Salt Deserves <em>Reverence</em></h2>
+      <p class="craft-body">
+        Most table salt is a shadow of what salt can be — stripped, bleached, and packed with anti-caking agents. We believe in salt the way it has existed for millennia: raw, complex, and full of the minerals the earth placed there. Every grain we sell is harvested by hand, tested for purity, and sourced from producers we've visited ourselves.
+      </p>
+      <button class="btn-light">Read Our Story</button>
+    </div>
+    <div class="craft-facts">
+      <div class="craft-fact">
+        <div class="craft-fact-number">84<span class="craft-fact-sup">+</span></div>
+        <div class="craft-fact-label">Trace minerals in Himalayan Pink</div>
+      </div>
+      <div class="craft-fact">
+        <div class="craft-fact-number">250<span class="craft-fact-sup">M</span></div>
+        <div class="craft-fact-label">Years old — our oldest deposit</div>
+      </div>
+      <div class="craft-fact">
+        <div class="craft-fact-number">12</div>
+        <div class="craft-fact-label">Countries we source from</div>
+      </div>
+      <div class="craft-fact">
+        <div class="craft-fact-number">0<span class="craft-fact-sup">%</span></div>
+        <div class="craft-fact-label">Additives. Ever.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CTA BAND -->
+<div class="cta-band">
+  <div class="cta-inner">
+    <p class="section-label" style="text-align:center;">Gift & Wholesale</p>
+    <h2 class="cta-title">Salt for Every <em>Occasion</em></h2>
+    <p class="cta-body">Curate a gift set for the cook in your life, or enquire about bulk wholesale for restaurants and specialty food retailers. We work with kitchens across India and beyond.</p>
+    <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;">
+      <button class="btn-primary">Build a Gift Set</button>
+      <button class="btn-outline">Wholesale Enquiry</button>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand footer-col">
+      <div class="nav-logo" style="text-decoration:none;display:flex;align-items:center;gap:11px;">
+        <div class="nav-logo-crystal">
+          <svg viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <polygon points="17,3 31,12 31,24 17,32 3,24 3,12" fill="none" stroke="#C4B99A" stroke-width="1.2"/>
+            <polygon points="17,9 25,14 25,22 17,27 9,22 9,14" fill="#C4B99A" opacity="0.15"/>
+            <circle cx="17" cy="17" r="3" fill="#C4B99A" opacity="0.5"/>
+          </svg>
+        </div>
+        <span style="font-family:var(--font-disp);font-size:19px;font-weight:400;color:var(--parchment);letter-spacing:1.5px;">AI PLUS SALTS</span>
+      </div>
+      <p>Artisan salts, hand-harvested from the world's most ancient and pristine sources. Delivered to your kitchen, pure as the day they formed.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Our Salts</h4>
+      <ul>
+        <li><a href="#">Himalayan Pink</a></li>
+        <li><a href="#">Sea Salts</a></li>
+        <li><a href="#">Smoked Salts</a></li>
+        <li><a href="#">Gourmet & Infused</a></li>
+        <li><a href="#">Cooking Salts</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Discover</h4>
+      <ul>
+        <li><a href="#">Our Origins</a></li>
+        <li><a href="#">Recipe Collection</a></li>
+        <li><a href="#">Chef Partners</a></li>
+        <li><a href="#">Gift Sets</a></li>
+        <li><a href="#">Wholesale</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="#">Our Story</a></li>
+        <li><a href="#">Sustainability</a></li>
+        <li><a href="#">Lab Testing</a></li>
+        <li><a href="#">Stockists</a></li>
+        <li><a href="#">Contact Us</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 AI PLUS SALTS Pvt. Ltd. All rights reserved. Prices inclusive of GST.</p>
+    <ul class="footer-bottom-links">
+      <li><a href="#">Privacy Policy</a></li>
+      <li><a href="#">Shipping & Returns</a></li>
+      <li><a href="#">Terms of Sale</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script>
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  const cards = document.querySelectorAll('.product-card');
+  const countEl = document.getElementById('product-count');
+  const emptyState = document.getElementById('empty-state');
+
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const filter = btn.dataset.filter;
+      filterBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      let visible = 0;
+      cards.forEach(card => {
+        const types = card.dataset.type.split(' ');
+        const match = filter === 'all' || types.includes(filter);
+        if (match) {
+          card.classList.add('visible');
+          card.style.animation = 'none';
+          card.offsetHeight;
+          card.style.animation = 'fadeUp 0.4s ease forwards';
+          visible++;
+        } else {
+          card.classList.remove('visible');
+        }
+      });
+
+      countEl.textContent = `Showing ${visible} variet${visible !== 1 ? 'ies' : 'y'}`;
+      emptyState.style.display = visible === 0 ? 'block' : 'none';
+    });
+  });
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = '1';
+        entry.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
+
+  cards.forEach((card, i) => {
+    card.style.opacity = '0';
+    card.style.transform = 'translateY(18px)';
+    card.style.transition = `opacity 0.5s ease ${i * 0.06}s, transform 0.5s ease ${i * 0.06}s, border-color 0.25s, box-shadow 0.3s`;
+    observer.observe(card);
+  });
+</script>
+
+</body>
+</html>
