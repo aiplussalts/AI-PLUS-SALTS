@@ -924,6 +924,13 @@ transform:translateY(0);
     transition: all 0.4s ease;
 }
 
+ .product-img img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+}
+
  
 </style>
 </head>
@@ -1104,11 +1111,9 @@ transform:translateY(0);
 
     <!-- SEA SALT -->
     <div class="product-card visible" data-type="sea">
-      <div class="product-img-wrap">
-        <div class="product-img img-sea">
-          <svg viewBox="0 0 90 90" xmlns="http://www.w3.org/2000/svg"><path d="M10,55 Q20,40 30,55 Q40,70 50,55 Q60,40 70,55 Q80,70 90,55" fill="none" stroke="currentColor" stroke-width="2"/><path d="M10,45 Q20,30 30,45 Q40,60 50,45 Q60,30 70,45 Q80,60 90,45" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M10,35 Q20,20 30,35 Q40,50 50,35 Q60,20 70,35 Q80,50 90,35" fill="none" stroke="currentColor" stroke-width="1"/><circle cx="45" cy="30" r="6" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
-          <div class="product-img-label">Refined Iodised Free Flow Salt</div>
-        </div>
+      <div class="product-img">
+    <img src="himalyanpinksalt.png" alt="Pink Himalayan Salt">
+</div>
         <span class="product-badge badge-popular">Popular</span>
         <div class="product-cta">Add to Basket →</div>
       </div>
