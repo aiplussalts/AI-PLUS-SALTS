@@ -343,23 +343,26 @@ footer{background:var(--navy);padding:5rem 0 2rem;border-top:1px solid rgba(212,
     border:1px solid rgba(212,175,55,0.2);
 }
   
-  @media (max-width: 768px) {
-    nav {
-        padding: 12px 15px;
-        overflow: hidden;
+ 
+@media (max-width: 768px) {
+
+    .about-content,
+    .about-grid,
+    .about-wrapper {
+        display: flex !important;
+        flex-direction: column !important;
+        grid-template-columns: 1fr !important;
     }
 
-    .nav-links {
-        gap: 12px;
+    .about-image,
+    .about-text {
+        width: 100% !important;
+        max-width: 100% !important;
     }
 
-    .nav-links a {
-        font-size: 12px;
-    }
-
-    .btn-quote {
-        padding: 10px 16px;
-        font-size: 12px;
+    .about-stats,
+    .features-grid {
+        grid-template-columns: 1fr !important;
     }
 }
   
