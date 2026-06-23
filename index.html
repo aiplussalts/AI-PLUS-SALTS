@@ -310,6 +310,53 @@ footer{background:var(--navy);padding:5rem 0 2rem;border-top:1px solid rgba(212,
 @media(prefers-reduced-motion:reduce){
   *{animation-duration:.01ms!important;transition-duration:.01ms!important;}
 }
+  .premium-logo{
+    height:65px;
+    width:auto;
+    transition:all 0.4s ease;
+    filter:
+      drop-shadow(0 0 10px rgba(212,175,55,0.5))
+      drop-shadow(0 0 20px rgba(212,175,55,0.3));
+    animation:logoFloat 4s ease-in-out infinite;
+}
+
+.premium-logo:hover{
+    transform:scale(1.08);
+    filter:
+      drop-shadow(0 0 15px rgba(212,175,55,0.8))
+      drop-shadow(0 0 35px rgba(212,175,55,0.6));
+}
+
+@keyframes logoFloat{
+    0%,100%{
+        transform:translateY(0px);
+    }
+    50%{
+        transform:translateY(-4px);
+    }
+}
+  .nav-logo{
+    background:rgba(255,255,255,0.05);
+    backdrop-filter:blur(10px);
+    padding:8px 18px;
+    border-radius:15px;
+    border:1px solid rgba(212,175,55,0.2);
+}
+  .hero-logo{
+    width:180px;
+    margin-bottom:25px;
+    animation:heroGlow 3s infinite alternate;
+}
+
+@keyframes heroGlow{
+    from{
+        filter:drop-shadow(0 0 15px rgba(212,175,55,0.4));
+    }
+    to{
+        filter:drop-shadow(0 0 40px rgba(212,175,55,0.9));
+    }
+}
+  
 </style>
 </head>
 <body>
@@ -327,10 +374,9 @@ footer{background:var(--navy);padding:5rem 0 2rem;border-top:1px solid rgba(212,
 <!-- NAVBAR -->
 <nav id="navbar">
   <div class="nav-inner">
-    <div class="nav-logo">
-      <div class="nav-logo-main">AI <span>PLUS</span> SALTS</div>
-      <div class="nav-logo-sub">Rajasthan, India &bull; Est. 2010</div>
-    </div>
+   <div class="nav-logo">
+  <img src="aipluslogo.jpeg" alt="AI Plus Salts Logo" class="premium-logo">
+</div>
     <ul class="nav-links">
       <li><a href="#about">About</a></li>
       <li><a href="#products">Products</a></li>
@@ -367,6 +413,7 @@ footer{background:var(--navy);padding:5rem 0 2rem;border-top:1px solid rgba(212,
       <div class="hero-badge-dot"></div>
       <span>ISO Certified &bull; Global Export Ready</span>
     </div>
+    <img src="aipluslogo.jpeg" class="hero-logo" alt="AI Plus Salts">
     <h1 class="hero-title">Premium Salt Solutions<br/>for <span class="gold">Global Industries</span></h1>
     <p class="hero-subtitle">Manufacturer and Supplier of Industrial, Edible and Water Treatment Salts — sourced from the pristine salt flats of Rajasthan, India.</p>
     <div class="hero-buttons">
