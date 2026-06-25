@@ -418,7 +418,46 @@ z-index:99999;
     text-align: center !important;
 }
 
+.hero::before{
+    content:'';
+    position:absolute;
+    width:800px;
+    height:800px;
+    background:radial-gradient(
+        circle,
+        rgba(212,175,55,0.12),
+        transparent 70%
+    );
+    top:-200px;
+    left:-200px;
+    animation:floatGlow 12s ease-in-out infinite alternate;
+    pointer-events:none;
+}
 
+@keyframes floatGlow{
+    0%{
+        transform:translate(0,0);
+    }
+    100%{
+        transform:translate(200px,100px);
+    }
+}
+
+  .hero{
+    background-size:80px 80px;
+    animation:gridMove 25s linear infinite;
+}
+
+@keyframes gridMove{
+    from{
+        background-position:0 0;
+    }
+    to{
+        background-position:80px 80px;
+    }
+}
+
+  
   
 </style>
 
