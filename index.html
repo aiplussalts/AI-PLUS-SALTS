@@ -366,12 +366,37 @@ footer{background:var(--navy);padding:5rem 0 2rem;border-top:1px solid rgba(212,
     }
 }
   
- 
+ .about-img-wrap img{
+ transition:1.2s ease;
+}
+
+.about-img-wrap:hover img{
+ transform:scale(1.08);
+}
+
+  #progress{
+position:fixed;
+top:0;
+left:0;
+height:3px;
+width:0%;
+background:#D4AF37;
+z-index:99999;
+}
+  
 
   
 </style>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+  
+  
 </head>
 <body>
+  <div id="progress"></div>
 
 <!-- LOADING SCREEN -->
 <div id="loader">
@@ -426,7 +451,7 @@ footer{background:var(--navy);padding:5rem 0 2rem;border-top:1px solid rgba(212,
       <span>ISO Certified &bull; Global Export Ready</span>
     </div>
    
-    <h1 class="hero-title">Premium Salt Solutions<br/>for <span class="gold">Global Industries</span></h1>
+    <h1 class="hero-title reveal-title">Premium Salt Solutions<br/>for <span class="gold">Global Industries</span></h1>
     <p class="hero-subtitle">Manufacturer and Supplier of Industrial, Edible and Water Treatment Salts — sourced from the pristine salt flats of Rajasthan, India.</p>
     <div class="hero-buttons">
       <a href="#products" class="btn-primary ripple">
@@ -986,5 +1011,128 @@ renderFAQs();
 createParticles();
 document.querySelectorAll('.fade-up,.stat-item').forEach(el=>observer.observe(el));
 </script>
+  
+  <script>
+
+const lenis = new Lenis({
+  duration: 1.2,
+  smoothWheel: true
+})
+
+function raf(time){
+  lenis.raf(time)
+  requestAnimationFrame(raf)
+}
+
+requestAnimationFrame(raf)
+
+</script>
+
+  <script>
+
+gsap.from(".reveal-title",{
+ y:120,
+ opacity:0,
+ duration:1.5,
+ ease:"power4.out"
+})
+
+</script>
+  
+  <script>
+
+gsap.from(".hero-buttons",{
+ y:80,
+ opacity:0,
+ duration:1.2,
+ delay:.5,
+ ease:"power3.out"
+})
+
+</script>
+
+  <script>
+
+gsap.from(".hero-stat",{
+ y:50,
+ opacity:0,
+ stagger:.2,
+ duration:1,
+ delay:.8
+})
+
+</script>
+
+  <script>
+
+gsap.from(".product-card",{
+ opacity:0,
+ y:100,
+ duration:1,
+ stagger:.15,
+ scrollTrigger:{
+   trigger:"#products",
+   start:"top 70%"
+ }
+})
+
+</script>
+
+  <script>
+
+gsap.from(".why-card",{
+ opacity:0,
+ y:80,
+ duration:1,
+ stagger:.2,
+ scrollTrigger:{
+   trigger:"#why",
+   start:"top 70%"
+ }
+})
+
+</script>
+
+
+  <script>
+
+window.addEventListener('scroll',()=>{
+
+let winScroll =
+document.documentElement.scrollTop
+
+let height =
+document.documentElement.scrollHeight -
+document.documentElement.clientHeight
+
+let scrolled =
+(winScroll / height) * 100
+
+document.getElementById("progress")
+.style.width = scrolled + "%"
+
+})
+
+</script>
+
+  <script>
+
+const hero = document.querySelector("#hero")
+
+hero.addEventListener("mousemove",(e)=>{
+
+const x=e.clientX
+const y=e.clientY
+
+hero.style.background=
+`radial-gradient(circle at ${x}px ${y}px,
+rgba(212,175,55,.12),
+transparent 500px)`
+
+})
+
+</script>
+
+  
 </body>
 </html>
