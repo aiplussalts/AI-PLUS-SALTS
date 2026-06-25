@@ -411,6 +411,16 @@ z-index:99999;
     z-index:2;
 }
   
+
+  .fade-up,
+.product-card,
+.why-card,
+.hero-content,
+.about-img-wrap img{
+    will-change: transform;
+    transform: translateZ(0);
+}
+
   
 </style>
 
@@ -1093,35 +1103,9 @@ gsap.from(".hero-stat",{
 
 </script>
 
-  <script>
 
-gsap.from(".product-card",{
- opacity:0,
- y:100,
- duration:1,
- stagger:.15,
- scrollTrigger:{
-   trigger:"#products",
-   start:"top 70%"
- }
-})
 
-</script>
 
-  <script>
-
-gsap.from(".why-card",{
- opacity:0,
- y:80,
- duration:1,
- stagger:.2,
- scrollTrigger:{
-   trigger:"#why",
-   start:"top 70%"
- }
-})
-
-</script>
 
 
   <script>
